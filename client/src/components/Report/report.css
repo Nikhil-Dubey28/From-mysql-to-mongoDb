@@ -1,0 +1,22 @@
+/* Customize the outer container style */
+.react-datepicker {
+    font-family: Arial, sans-serif;
+    background-color: rgb(254, 243, 243);
+    cursor: pointer;
+    color: rgb(11, 10, 10);
+  }
+  
+  /* Customize the input field style */
+  .react-datepicker__input-container input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Customize the date picker pop-up style */
+  .react-datepicker-popper {
+    z-index: 9999; /* Ensure the date picker is above other elements */
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  }

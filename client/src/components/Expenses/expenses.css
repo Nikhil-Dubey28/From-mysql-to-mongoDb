@@ -1,0 +1,48 @@
+.expense-title {
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+.main-nav {
+    /* background-color: rgb(234, 255, 234); */
+    background-color: rgb(255, 253, 234);
+    
+}
+
+.description-text{
+    word-wrap: break-word;
+    color: black;
+}
+
+.div-amount{
+    background-color: rgb(206, 255, 206);
+}
+
+.div-category {
+    background-color: rgb(222, 246, 255);
+}
+
+.div-desc{
+    background-color: lightyellow;
+}
+
+ .input-expense {
+    border: none !important;
+    /* background-color: rgb(233,233,233);; */
+    
+  }
+   input:focus {
+    outline: none;
+  }
+
+  .input-desc{
+    border: none !important;
+  }
+
+/* .div-main {
+    background: linear-gradient(to bottom, #f54141, #802e95);
+} */
+/* 
+.li-main {
+    background: linear-gradient(to bottom, #000000, #161717);
+} */

@@ -1,0 +1,25 @@
+.form-container {
+    width: 400px !important;
+  }
+
+.login-text {
+    font-size: 2.5rem;
+}
+
+.login-button {
+  background-color: rgb(31, 26, 26) !important;
+}
+
+/* .div-container {
+  background: linear-gradient(to bottom, #692aac, #ffcc00);
+} */
+
+/* .div-container {
+  background: linear-gradient(to bottom, #55841f, #ffcc00);
+} */
+
+/* .div-container {
+  background: linear-gradient(to bottom, #692aac, #a34221);
+} */
+
+/* #6f2f9c, */
