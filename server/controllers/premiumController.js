@@ -1,5 +1,5 @@
-const User = require('../model/User')
-const Expense = require('../model/Expense')
+const User = require('../models/User')
+const Expense = require('../models/Expense')
 const sequelize = require('../database/configDatabase')
 const { Op } = require("sequelize");
 
@@ -46,7 +46,7 @@ const getLeaderboard = async (req, res) => {
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
 
-        // Use an aggregation pipeline to fetch the leaderboard
+
         const pipeline = [
             {
                 $project: {

@@ -11,7 +11,7 @@ const Download = () => {
     
     
             const token  = localStorage.getItem('token')
-            const response = await axios.get('http://localhost:3000/api/expense/download', {
+            const response = await axios.get('http://localhost:3000/api/expenses/download', {
               headers : {
                 Authorization: token
               }

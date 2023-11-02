@@ -47,7 +47,7 @@ const user = JSON.parse(localStorage.getItem('user'))
         setShowBuy(!user.ispremiumuser);
 
         // Fetch expenses data
-        const expensesResponse = await axios.get('http://localhost:3000/api/expense/getexpense', {
+        const expensesResponse = await axios.get('http://localhost:3000/api/expenses/getexpenses', {
           headers: {
             Authorization: token,
           },
@@ -88,7 +88,7 @@ const toggleEditState = (index) => {
     const dateStr = `${formattedDay}-${formattedMonth}-${year}`;
 
    
-    axios.post('http://localhost:3000/api/expense/addexpense', { amount, description, category,date:dateStr }, {
+    axios.post('http://localhost:3000/api/expenses/addexpense', { amount, description, category,date:dateStr }, {
       headers: {
         Authorization: token, 
       },
@@ -125,7 +125,7 @@ const toggleEditState = (index) => {
   const deleteExpense = async (id) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.delete(`http://localhost:3000/api/expense/${id}`, {
+      const response = await axios.delete(`http://localhost:3000/api/expenses/${id}`, {
         headers: {
           Authorization: token
         }
@@ -146,7 +146,7 @@ const toggleEditState = (index) => {
       // deleteExpense(id)
       console.log(e)
       const token = localStorage.getItem('token')
-     const response = await axios.get(`http://localhost:3000/api/expense/getexpense/${id}`,{
+     const response = await axios.get(`http://localhost:3000/api/expenses/getexpenses/${id}`,{
       headers: {
         Authorization : token
       }
@@ -183,7 +183,7 @@ const toggleEditState = (index) => {
       setShowBuy(!user.ispremiumuser);
 
       // Fetch expenses data
-      const response = await axios.get(`http://localhost:3000/api/expense/paginated?page=${currentPage.current}&limit=${limit}`, {
+      const response = await axios.get(`http://localhost:3000/api/expenses/paginated?page=${currentPage.current}&limit=${limit}`, {
         headers: {
           Authorization: token,
         },

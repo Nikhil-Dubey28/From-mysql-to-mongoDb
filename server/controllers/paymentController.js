@@ -1,8 +1,8 @@
 const Razorpay = require('razorpay');
 const config = require('dotenv').config
 const crypto = require('crypto')
-const Order = require('../model/Order')
-const User = require('../model/User')
+const Order = require('../models/Order')
+const User = require('../models/User')
 const userController = require('./userController')
 const jwt = require('jsonwebtoken');
 const secretKey = process.env.TOKEN_SECRET_KEY
@@ -16,7 +16,7 @@ config({ path: './config/config.env' })
 
 const checkout = async (req, res) => {
 
-    
+
 
     try {
         const razorpay = new Razorpay({
@@ -41,7 +41,7 @@ const checkout = async (req, res) => {
             success: true,
             order,
             newOrder,
-            key_id : razorpay.key_id
+            key_id: razorpay.key_id
         });
     } catch (error) {
         console.error('Error creating Razorpay order:', error);
@@ -53,26 +53,26 @@ const checkout = async (req, res) => {
 };
 
 
-   
+
 
 
 
 // const updatePayment = async(req,res) => {
 //     try{
-    
+
 //         console.log(req.body)
 //     const { order_id, payment_id, signature_id } = req.body
 
 
-    
+
 //     const order = await Order.findOne({where: {orderid:order_id }})
 
-    
+
 //     if(order){
 //         await Order.update({status:'SUCCESS',paymentid:payment_id,signatureid:signature_id},
 //         { where: { orderid: order_id } } // Specify the where condition
 //         )
-        
+
 //         const user = await User.findOne({ where: { id: order.userId } });
 //         if (user) {
 //             const userId = req.userId
@@ -87,7 +87,7 @@ const checkout = async (req, res) => {
 //         }
 //     }
 //     }
-   
+
 // catch(err) {
 //     console.log(err)
 //     res.status(500).json({message:'internal server error'})
@@ -120,7 +120,7 @@ const updatePayment = async (req, res) => {
 
             if (user) {
                 const userId = req.userId;
-                    console.log(userId)
+                console.log(userId)
                 console.log(user._id)
 
                 await User.updateOne({ _id: user._id }, { ispremiumuser: true });

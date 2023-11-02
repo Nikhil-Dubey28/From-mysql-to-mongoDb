@@ -1,28 +1,28 @@
 const express = require('express')
 const authenticate = require('../middleware/authenticate')
-const expenseController = require('../controller/expenseController')
+const expenseController = require('../controllers/expenseController')
 const router = express.Router()
 
 // router.use(authenticate)
 
 // add expense
-router.post('/expense/addexpense', authenticate,expenseController.createExpense)
+router.post('/expenses/addexpense', authenticate,expenseController.createExpense)
 
 //get expense
-router.get('/expense/getexpense',authenticate, expenseController.getExpense)
+router.get('/expenses/getexpenses',authenticate, expenseController.getExpenses)
 
-router.get('/expense/download', authenticate, expenseController.downloadExpense)
+router.get('/expenses/download', authenticate, expenseController.downloadExpense)
 
 //paginated expenses
-router.get('/expense/paginated',authenticate,expenseController.paginatedExpense)
+router.get('/expenses/paginated',authenticate,expenseController.paginatedExpenses)
 
 //delete expense
-router.delete('/expense/:id',authenticate,expenseController.deleteExpense)
+router.delete('/expenses/:id',authenticate,expenseController.deleteExpense)
 
 //edit expense
-router.patch('/expense/edit/:id',authenticate,expenseController.editExpense)
+router.patch('/expenses/edit/:id',authenticate,expenseController.editExpense)
 
 //GET BY ID 
-router.get('/expense/getexpense/:id',authenticate,expenseController.getExpenseById)
+router.get('/expenses/getexpense/:id',authenticate,expenseController.getExpenseById)
 
 module.exports = router

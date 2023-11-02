@@ -1,36 +1,36 @@
 const uuid = require('uuid')
 const Sib = require('sib-api-v3-sdk')
 
-const User =require('../model/User')
+const User = require('../models/User')
 
 const bcrypt = require('bcrypt')
 
-const Forgotpassword = require('../model/Forgotpassword')
+const Forgotpassword = require('../models/Forgotpassword')
 const config = require('dotenv').config
-config({path:'./config/config.env'})
+config({ path: './config/config.env' })
 
 
 
-const forgotPassword = async (req,res) => {
+const forgotPassword = async (req, res) => {
     try {
-    const {email} = req.body
+        const { email } = req.body
 
-    const user = await User.findOne({email :  email });
-    if(user){
-        const id = uuid.v4();
-        // user.createForgotpassword({ id , active: true })
-        //     .catch(err => {
-        //         throw new Error(err)
-        //     })
+        const user = await User.findOne({ email: email });
+        if (user) {
+            const id = uuid.v4();
+            // user.createForgotpassword({ id , active: true })
+            //     .catch(err => {
+            //         throw new Error(err)
+            //     })
 
-        const newForgotpassword = new Forgotpassword({
-            id,
-            active: true,
-            userId: user._id
-        })
+            const newForgotpassword = new Forgotpassword({
+                id,
+                active: true,
+                userId: user._id
+            })
 
-        await newForgotpassword.save()
-            const client = Sib.ApiClient.instance 
+            await newForgotpassword.save()
+            const client = Sib.ApiClient.instance
             const apiKey = client.authentications['api-key']
             apiKey.apiKey = process.env.SIB_API_KEY
 
@@ -44,7 +44,7 @@ const forgotPassword = async (req,res) => {
                     email: email
                 }
             ]
-        tranEmailApi.sendTransacEmail( {
+            tranEmailApi.sendTransacEmail({
                 sender,
                 to: receivers,
                 subject: 'Reset Password Link',
@@ -52,32 +52,32 @@ const forgotPassword = async (req,res) => {
                 <p>Here is the link to reset your password:</p>
                 <a href="http://localhost:3000/api/password/resetpassword/${id}">Reset password</a>`,
             })
-            .then((response) => {
-                console.log(response)
-                return res.status(202).json({message: 'Link to reset password sent to your mail ', success: true})
+                .then((response) => {
+                    console.log(response)
+                    return res.status(202).json({ message: 'Link to reset password sent to your mail ', success: true })
 
-            }).catch((err) =>{
-                console.log(err)
-            })
-        }else{
+                }).catch((err) => {
+                    console.log(err)
+                })
+        } else {
             throw new Error('User does not exist')
         }
-    }catch(err) {
+    } catch (err) {
         console.error(err)
         return res.json({ message: err, sucess: false });
     }
 }
 
 
-const resetPassword = async (req,res) => {
-    try{
-    const {id} = req.params
-   const forgotpasswordrequest = await Forgotpassword.findOne({_id : id})
+const resetPassword = async (req, res) => {
+    try {
+        const { id } = req.params
+        const forgotpasswordrequest = await Forgotpassword.findOne({ _id: id })
 
-   if(forgotpasswordrequest){
-    await forgotpasswordrequest.updateOne({_id: id},{active: false})
+        if (forgotpasswordrequest) {
+            await forgotpasswordrequest.updateOne({ _id: id }, { active: false })
 
-    res.status(200).send(`<html>
+            res.status(200).send(`<html>
                                     <script>
                                         function formsubmitted(e){
                                             e.preventDefault();
@@ -91,45 +91,45 @@ const resetPassword = async (req,res) => {
                                         <button>reset password</button>
                                     </form>
                                 </html>`);
-    
 
-                                    }
-   }catch(err) {
-    console.log(err)
-    res.status(500).send('Internal server error')
-   }
-   res.end()
+
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Internal server error')
+    }
+    res.end()
 }
 
 
 
-const updatePassword = async(req,res) => {
-    try{
-        const {newpassword} = req.query  
-        const {resetpasswordid} = req.params
+const updatePassword = async (req, res) => {
+    try {
+        const { newpassword } = req.query
+        const { resetpasswordid } = req.params
 
-        const resetpasswordrequest = await Forgotpassword.findOne({_id:resetpasswordid})
+        const resetpasswordrequest = await Forgotpassword.findOne({ _id: resetpasswordid })
         if (!resetpasswordrequest) {
             return res.status(404).json({ error: 'Reset password request not found', success: false });
         }
 
-        const user = await User.findOne( {_id:resetpasswordrequest.userId})
+        const user = await User.findOne({ _id: resetpasswordrequest.userId })
         if (!user) {
             return res.status(404).json({ error: 'No user exists', success: false });
         }
         const saltRounds = 10
         const salt = await bcrypt.genSalt(saltRounds)
-        const hash = await bcrypt.hash(newpassword,salt)
+        const hash = await bcrypt.hash(newpassword, salt)
 
-        await user.updateOne({ _id: user._id } , {password: hash})
+        await user.updateOne({ _id: user._id }, { password: hash })
 
-        res.status(201).json({message: 'password successfully updated'})
+        res.status(201).json({ message: 'password successfully updated' })
 
 
 
-    }catch(err) {
+    } catch (err) {
         console.log(err)
-        res.status(500).json({error: 'internal server error'})
+        res.status(500).json({ error: 'internal server error' })
     }
 }
 

@@ -1,5 +1,5 @@
 const express = require('express')
-const premiumController = require('../controller/premiumController')
+const premiumController = require('../controllers/premiumController')
 const router = express.Router()
 const authenticate = require('../middleware/authenticate')
 

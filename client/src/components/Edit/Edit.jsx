@@ -14,7 +14,7 @@ const Edit = () => {
         const fetch = async () => {
             try {
                 const token = localStorage.getItem('token')
-                const response = await axios.get(`http://localhost:3000/api/expense/getexpense/${id}`,{
+                const response = await axios.get(`http://localhost:3000/api/expenses/getexpense/${id}`,{
                     headers: {
                         Authorization :token
                     }
@@ -45,7 +45,7 @@ const Edit = () => {
             }
 
 
-            const response = await axios.patch(`http://localhost:3000/api/expense/edit/${id}`,updatedExpenses, {
+            const response = await axios.patch(`http://localhost:3000/api/expenses/edit/${id}`,updatedExpenses, {
                 headers: {
                     Authorization: token
                 }
